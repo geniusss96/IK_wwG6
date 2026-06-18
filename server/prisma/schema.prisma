@@ -1,0 +1,30 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Group {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  students Student[]
+}
+
+model Student {
+  id         Int                @id @default(autoincrement())
+  name       String
+  groupId    Int
+  group      Group              @relation(fields: [groupId], references: [id])
+  attendance AttendanceRecord[]
+}
+
+model AttendanceRecord {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  student   Student  @relation(fields: [studentId], references: [id])
+  date      DateTime
+  status    String   // 'PRESENT', 'ABSENT', 'EXCUSED', 'LATE'
+}
