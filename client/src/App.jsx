@@ -99,6 +99,8 @@ function App() {
     setTimeout(() => setToast(null), 3000);
   };
 
+  const selectedGroupName = groups.find(g => g.id == selectedGroup)?.name || '';
+
   return (
     <div className="container">
       <div className="glass-panel">
@@ -143,6 +145,11 @@ function App() {
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
+        </div>
+        
+        <div className="print-only">
+          <p>Группа: <strong>{selectedGroupName}</strong></p>
+          <p>Дата: <strong>{new Date(date).toLocaleDateString('ru-RU')}</strong></p>
         </div>
 
         <table className="attendance-table">
